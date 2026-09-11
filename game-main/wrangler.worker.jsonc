@@ -1,0 +1,12 @@
+{
+  "$schema": "node_modules/wrangler/config-schema.json",
+  "name": "sky-first-games",
+  "main": "worker/index.ts",
+  "compatibility_date": "2026-09-11",
+  "assets": { "directory": "./dist", "binding": "ASSETS", "not_found_handling": "single-page-application" },
+  "d1_databases": [{ "binding": "GAME_DB", "database_name": "game", "database_id": "ad37223f-92b4-4636-a17b-f1083a469031" }],
+  "r2_buckets": [{ "binding": "GAME_ASSETS", "bucket_name": "game" }],
+  "durable_objects": { "bindings": [{ "name": "GAME_ROOMS", "class_name": "GameRoom" }] },
+  "migrations": [{ "tag": "v1", "new_sqlite_classes": ["GameRoom"] }],
+  "vars": { "APP_NAME": "Sky First Games", "MAIN_SITE_URL": "https://skyfirst.io.vn" }
+}
