@@ -1,2 +1,0 @@
-type Env={GAME_ASSETS:R2Bucket};
-export const onRequest:PagesFunction<Env>=async({request,env})=>{const u=new URL(request.url);const key=decodeURIComponent(u.pathname.replace(/^\/media\//,''));const obj=await env.GAME_ASSETS.get(key);if(!obj)return new Response('Not found',{status:404});const h=new Headers();obj.writeHttpMetadata(h);h.set('etag',obj.httpEtag);h.set('cache-control','public, max-age=31536000, immutable');return new Response(obj.body,{headers:h})};
