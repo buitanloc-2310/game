@@ -1,0 +1,27 @@
+import React from 'react';
+import { ArrowRight, AudioLines, Gamepad2, Globe2, Headphones, Layers3, Play, QrCode, Sparkles, Users2, WandSparkles } from 'lucide-react';
+import { navigate } from '../lib/router';
+import { gameModes } from '../data/gameModes';
+import { languages } from '../data/languages';
+import { seedQuestionSets } from '../data/seedContent';
+import type { SiteConfig } from '../types';
+
+export function HomePage({config}:{config:SiteConfig}){
+ const featured=gameModes.filter(x=>x.featured).slice(0,8);
+ const play=(mode:string,set:string)=>navigate(`/play?mode=${encodeURIComponent(mode)}&set=${encodeURIComponent(set)}`);
+ return <main>
+  <section className="hero-v2">
+   <div className="hero-orb orb-a"/><div className="hero-orb orb-b"/>
+   <div className="hero-copy"><span className="announcement"><Sparkles/> {config.announcement||'15 learning languages • 40+ game modes • real-life practice'}</span><div className="brand-lockup"><img src={config.logoUrl||'/brand/sky-first-logo.png'} alt="Sky First"/><div><b>SKY FIRST GAMES</b><small>PLAY • LEARN • LEVEL UP</small></div></div><h1>{config.heroTitle||'Play. Learn. Level Up.'}</h1><p>{config.heroSubtitle||'A multilingual learning-game ecosystem for school, daily life and the workplace.'}</p><div className="hero-actions"><button className="primary-button big" onClick={()=>navigate('/quick-play')}><Play/>Play Now</button><button className="secondary-button big" onClick={()=>navigate('/join')}><QrCode/>Join Game</button></div><div className="hero-proof"><span><Gamepad2/><b>{gameModes.length}+</b> Game Modes</span><span><Globe2/><b>{languages.length}</b> Learning Languages</span><span><Layers3/><b>{seedQuestionSets.length}</b> Official Packs</span></div></div>
+   <div className="hero-console"><div className="console-top"><span>LIVE PREVIEW</span><i/><i/><i/></div><div className="console-card"><div className="console-icon">🚀</div><span>Rocket Race</span><h3>Workplace English</h3><p>Deadline • Meeting • Email • Customer service</p><div className="console-progress"><i/></div><div className="console-choice"><b>A</b>Please confirm before proceeding.</div><div className="console-choice"><b>B</b>Whatever.</div><button onClick={()=>play('rocket-race',seedQuestionSets.find(s=>s.language==='en')?.id||seedQuestionSets[0].id)}>PLAY DEMO <ArrowRight/></button></div></div>
+  </section>
+
+  <section className="home-section"><div className="section-heading"><div><span className="eyebrow">PLAY TODAY</span><h2>More than a quiz. Choose an experience.</h2><p>Each mode has its own mechanic: race, tower, memory, scenario, classroom, listening and more.</p></div><button className="text-button" onClick={()=>navigate('/explore')}>Explore all <ArrowRight/></button></div><div className="game-showcase">{featured.map(m=><button key={m.id} className="showcase-card" style={{'--card-accent':m.color} as React.CSSProperties} onClick={()=>play(m.id,seedQuestionSets.find(s=>m.supportedQuestionTypes.some(t=>s.questions.some(q=>q.type===t)))?.id||seedQuestionSets[0].id)}><span>{m.icon}</span><div><small>{m.family.toUpperCase()}</small><h3>{m.name}</h3><p>{m.description}</p></div><ArrowRight/></button>)}</div></section>
+
+  <section className="worlds-section"><div className="section-heading"><div><span className="eyebrow">15 LANGUAGE WORLDS</span><h2>15 learning languages, each with its own learning experience.</h2><p>Language adapters handle script, TTS, direction and language-specific exercise types.</p></div></div><div className="language-ribbon">{languages.map(l=><button key={l.code} style={{'--lang':l.accent} as React.CSSProperties} onClick={()=>navigate(`/explore?lang=${l.code}`)}><span>{l.icon}</span><b>{l.nativeName}</b><small>{l.specialties?.slice(0,2).join(' • ')}</small></button>)}</div></section>
+
+  <section className="scenario-section"><div className="scenario-copy"><span className="eyebrow">REAL-LIFE LEARNING</span><h2>From school to daily life and the workplace.</h2><p>Learning goes beyond A/B/C/D. Practice emails, meetings, deadlines, customer service, airports, classrooms, volunteering and real-world decisions.</p><div className="scenario-grid"><div><Headphones/><b>Real Listening</b><span>Audio files + TTS fallback</span></div><div><Users2/><b>Classroom</b><span>Live, one-screen, host-paced</span></div><div><WandSparkles/><b>Creator Studio</b><span>Create content, games and Access Passes</span></div><div><AudioLines/><b>Advanced Tasks</b><span>Dictation, cloze, role-play, scenarios</span></div></div></div><div className="scenario-card"><span className="badge">SCHOOL WORKPLACE</span><h3>Volunteer running a class at school</h3><ol><li>Listen to a room-change notice</li><li>Confirm the time and location</li><li>Order the setup workflow</li><li>Write a learner announcement</li><li>Handle a late learner</li><li>Submit a post-session report</li></ol><button className="primary-button" onClick={()=>navigate('/explore')}>Explore scenarios <ArrowRight/></button></div></section>
+
+  <section className="creator-cta"><div><span className="eyebrow">CREATE • HOST • SHARE</span><h2>One question set, dozens of ways to play.</h2><p>Creators build reusable content, choose compatible game modes and issue volunteer Access Passes without sharing Creator credentials.</p></div><button className="primary-button big" onClick={()=>navigate('/login')}>Open Creator Studio <ArrowRight/></button></section>
+ </main>
+}
