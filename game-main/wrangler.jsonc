@@ -1,0 +1,23 @@
+{
+  "$schema": "./node_modules/wrangler/config-schema.json",
+  "name": "game",
+  "pages_build_output_dir": "./dist",
+  "compatibility_date": "2026-09-11",
+  "d1_databases": [
+    {
+      "binding": "GAME_DB",
+      "database_name": "game",
+      "database_id": "ad37223f-92b4-4636-a17b-f1083a469031"
+    }
+  ],
+  "r2_buckets": [
+    {
+      "binding": "GAME_ASSETS",
+      "bucket_name": "game"
+    }
+  ],
+  "vars": {
+    "APP_NAME": "Sky First Games",
+    "MAIN_SITE_URL": "https://skyfirst.io.vn"
+  }
+}
