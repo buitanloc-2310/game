@@ -318,34 +318,7 @@ export function LoginPage({
           </button>
         </form>
 
-        {initialized && mode !== 'bootstrap' && (
-          <div className="auth-switch">
-            {mode === 'login' ? (
-              <>
-                <span>Lần đầu sử dụng Sky First Games?</span>
-
-                <button
-                  type="button"
-                  onClick={() => switchMode('register')}
-                >
-                  Khởi tạo tài khoản Creator
-                </button>
-              </>
-            ) : (
-              <>
-                <span>Đã có tài khoản Creator hoặc Admin?</span>
-
-                <button
-                  type="button"
-                  onClick={() => switchMode('login')}
-                >
-                  Đăng nhập
-                </button>
-              </>
-            )}
-          </div>
-        )}
-
+       
         <div className="auth-note">
           <Sparkles />
 
