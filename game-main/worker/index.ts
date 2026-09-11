@@ -18,7 +18,7 @@ const enc = new TextEncoder();
 function bytesToB64(bytes:Uint8Array){ let s=''; for(const b of bytes)s+=String.fromCharCode(b); return btoa(s); }
 function b64ToBytes(s:string){ const raw=atob(s); return Uint8Array.from(raw,c=>c.charCodeAt(0)); }
 function toHex(buf:ArrayBuffer){return [...new Uint8Array(buf)].map(b=>b.toString(16).padStart(2,'0')).join('')}
-async function hashPassword(password:string,saltB64?:string){ const salt=saltB64?b64ToBytes(saltB64):crypto.getRandomValues(new Uint8Array(16)); const key=await crypto.subtle.importKey('raw',enc.encode(password),'PBKDF2',false,['deriveBits']); const bits=await crypto.subtle.deriveBits({name:'PBKDF2',hash:'SHA-256',salt,iterations:120000},key,256); return {hash:bytesToB64(new Uint8Array(bits)),salt:bytesToB64(salt)}; }
+async function hashPassword(password:string,saltB64?:string){ const salt=saltB64?b64ToBytes(saltB64):crypto.getRandomValues(new Uint8Array(16)); const key=await crypto.subtle.importKey('raw',enc.encode(password),'PBKDF2',false,['deriveBits']); const bits=await crypto.subtle.deriveBits({name:'PBKDF2',hash:'SHA-256',salt,iterations:100000},key,256); return {hash:bytesToB64(new Uint8Array(bits)),salt:bytesToB64(salt)}; }
 async function hashToken(token:string){return toHex(await crypto.subtle.digest('SHA-256',enc.encode(token)))}
 function randomToken(){const b=crypto.getRandomValues(new Uint8Array(24));return bytesToB64(b).replace(/[+/=]/g,'').slice(0,32)}
 function randomCode(len=6){let out='';const b=crypto.getRandomValues(new Uint8Array(len));for(const x of b)out+=(x%10);return out}
